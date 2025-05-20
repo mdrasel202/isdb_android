@@ -8,20 +8,20 @@
     tools:context=".MainActivity">
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/textName"
         android:layout_width="282dp"
         android:layout_height="46dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="64dp"
         android:ems="10"
         android:inputType="text"
         android:text="Name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/textEmail"
         android:layout_width="284dp"
         android:layout_height="52dp"
         android:layout_marginTop="32dp"
@@ -31,10 +31,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+        app:layout_constraintTop_toBottomOf="@+id/textName" />
 
     <EditText
-        android:id="@+id/editTextText2"
+        android:id="@+id/textPassword"
         android:layout_width="282dp"
         android:layout_height="58dp"
         android:layout_marginTop="24dp"
@@ -44,10 +44,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress" />
+        app:layout_constraintTop_toBottomOf="@+id/textEmail" />
 
     <EditText
-        android:id="@+id/editTextText3"
+        android:id="@+id/textAge"
         android:layout_width="280dp"
         android:layout_height="57dp"
         android:layout_marginTop="28dp"
@@ -56,25 +56,26 @@
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
+        app:layout_constraintTop_toBottomOf="@+id/textPassword" />
 
     <EditText
-        android:id="@+id/editTextText4"
+        android:id="@+id/textSalary"
         android:layout_width="280dp"
         android:layout_height="60dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Salary"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText3" />
+        app:layout_constraintTop_toBottomOf="@+id/textAge" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="203dp"
         android:layout_height="56dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="156dp"
         android:text="Save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -93,19 +94,34 @@
         app:endIconTint="@color/teal_700"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText4">
+        app:layout_constraintTop_toBottomOf="@+id/textSalary">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextDob"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:inputType="none"
-            android:minHeight="48dp"
-            android:paddingVertical="12dp"
-            android:textSize="16dp" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <EditText
+        android:id="@+id/editTextTextPostalAddress"
+        android:layout_width="315dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="52dp"
+        android:ems="10"
+        android:hint="address"
+        android:inputType="textPostalAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDate2" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/editTextDob"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:inputType="none"
+        android:minHeight="48dp"
+        android:paddingVertical="12dp"
+        android:textSize="16dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
