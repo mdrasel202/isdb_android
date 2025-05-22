@@ -1,7 +1,5 @@
 package com.example.andeoiddemo.activity;
 
-import static android.content.ContentValues.TAG;
-
 import android.os.Bundle;
 import android.util.Log;
 
@@ -10,11 +8,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.andeoiddemo.R;
+import com.example.andeoiddemo.adapter.EmployeeAdapter;
 import com.example.andeoiddemo.model.Employee;
 import com.example.andeoiddemo.service.ApiService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -27,6 +29,12 @@ public class EmployeeListActivity extends AppCompatActivity {
 
     private static final String TAG = "EmployeeListActivity";
 
+    private RecyclerView recyclerView;
+
+    private EmployeeAdapter employeeAdapter;
+
+    private List<Employee> employeeList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +45,12 @@ public class EmployeeListActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        employeeAdapter = new EmployeeAdapter(employeeList);
+        recyclerView = findViewById(R.id.employeeRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(employeeAdapter);
+
         fetchEmployee();
     }
 
@@ -58,6 +72,9 @@ public class EmployeeListActivity extends AppCompatActivity {
                         Log.d(TAG, "ID : " + emp.getId() + "Name : " + emp.getName() + "Designation : " + emp.getDesignation());
 
                     }
+                    employeeList.clear();
+                    employeeList.addAll(employees);
+                    employeeAdapter.notifyDataSetChanged();
                 }else {
                     Log.e(TAG, "API Response Error" + response.code());
                 }

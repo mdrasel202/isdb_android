@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Andeoid Demo</string>
+
+
+    <!--employee-->
+    <string name="name">Name</string>
 </resources>
