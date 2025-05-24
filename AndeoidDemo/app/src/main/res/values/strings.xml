@@ -4,4 +4,6 @@
 
     <!--employee-->
     <string name="name">Name</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
 </resources>
