@@ -7,8 +7,9 @@ public class Employee {
     private String designation;
     private int age;
     private String address;
-    //	private LocalDate dob;
+    private String dob;
     private double salary;
+
     private String image;
 
     public Employee() {
@@ -60,6 +61,14 @@ public class Employee {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
     }
 
     public double getSalary() {

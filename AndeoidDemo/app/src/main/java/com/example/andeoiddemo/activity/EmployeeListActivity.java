@@ -39,7 +39,7 @@ public class EmployeeListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_employee_list2);
+        setContentView(R.layout.activity_employee_list);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -56,7 +56,7 @@ public class EmployeeListActivity extends AppCompatActivity {
 
     private void fetchEmployee(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2.:8081/")
+                .baseUrl("http://10.0.2.2:8081/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -82,7 +82,7 @@ public class EmployeeListActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Employee>> call, Throwable t) {
-                Log.e(TAG, "API Call Failed" + t.getMessage());
+                Log.e(TAG, "API Call Failed " + t.getMessage());
             }
         });
     }
