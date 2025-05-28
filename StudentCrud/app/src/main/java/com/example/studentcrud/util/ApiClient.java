@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    private static final String BASF_URL = "http://10.0.2.2.8080/";
+    private static final String BASF_URL = "http://10.0.2.2.8081/";
     private static Retrofit retrofit;
 
     public static Retrofit getRetrofitInstance(){
