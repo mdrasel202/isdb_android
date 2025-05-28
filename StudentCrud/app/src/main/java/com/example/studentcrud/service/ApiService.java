@@ -1,4 +1,14 @@
 package com.example.studentcrud.service;
 
-public interface ApiService {
+import com.example.studentcrud.model.Student;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.POST;
+
+public interface ApiService{
+    @POST("student")
+    Call<List<Student>> saveStudent(@Body Student student);
 }

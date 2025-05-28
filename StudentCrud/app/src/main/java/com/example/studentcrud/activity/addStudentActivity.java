@@ -1,6 +1,8 @@
 package com.example.studentcrud.activity;
 
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,9 +11,17 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.studentcrud.R;
+import com.example.studentcrud.service.ApiService;
+import com.example.studentcrud.util.ApiClient;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class addStudentActivity extends AppCompatActivity {
 
+    private TextInputEditText editTextDob;
+    private TextInputLayout editTextDate;
+    private EditText textName, textClass, textAge, textAddress;
+    private Button btnSave;
 
 
     @Override
