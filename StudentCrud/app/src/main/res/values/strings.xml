@@ -2,10 +2,13 @@
     <string name="app_name">Student Crud</string>
     <string name="add_button">Button</string>
     <string name="list_button">List Button</string>
-    <string name="text_name">Text Name</string>
-    <string name="text_class">Text Class</string>
-    <string name="text_age">Text Age</string>
-    <string name="text_address">Text Address</string>
+    <string name="text_name"> Name</string>
+    <string name="text_class"> Class</string>
+    <string name="text_age"> Age</string>
+    <string name="text_address"> Address</string>
     <string name="add_student_button">Add Student Button</string>
     <string name="date">Date</string>
+
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
 </resources>

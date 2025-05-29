@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+
 
     <application
         android:allowBackup="true"
@@ -12,22 +12,24 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.StudentCrud"
+        android:theme="@style/Theme.BroadCastService"
         tools:targetApi="31">
-        <activity
-            android:name=".activity.ListStudentActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.AddStudentActivity"
-            android:exported="false" />
+        <service
+            android:name=".service.MyBackGroundService"
+            android:enabled="true"
+            android:exported="false">
+        </service>
+
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-                <intent-filter>
-                    <action android:name="android.intent.action.MAIN"/>
-                    <category android:name="android.intent.category.LAUNCHER"/>
-                </intent-filter>
+            android:exported="true" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.LAUNCHER"/>
+            </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

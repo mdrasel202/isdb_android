@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -29,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class addStudentActivity extends AppCompatActivity {
+public class AddStudentActivity extends AppCompatActivity {
 
     private TextInputEditText editTextDob;
     private TextInputLayout editTextDate;
@@ -38,7 +37,7 @@ public class addStudentActivity extends AppCompatActivity {
     private ApiService apiService = ApiClient.getApiService();
     private boolean isEditMode = false;
 
-//    private Long studentId = -1L;
+    private long studentId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,24 +63,31 @@ public class addStudentActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.btnSave);
 
         //update
-//        Intent intent = getIntent();
-//        if(getIntent().hasExtra("student")){
-//            Student student = new Gson()
-//                    .fromJson(intent.getStringExtra("student"), Student.class);
-//            studentId = student.getId();
-//
-//            textName.setText(student.getName());
-//            textClass.setText(student.getClazz());
-//            textAge.setText(student.getAge());
-//            textAddress.setText(student.getAddress());
-//            editTextDob.setText(student.getDob());
-//
-//            btnSave.setText(R.string.update);
-//            isEditMode = true;
-//        }
+        Intent intent = getIntent();
+        if(getIntent().hasExtra("student")){
+            Student student = new Gson()
+                    .fromJson(intent.getStringExtra("student"), Student.class);
+            studentId = student.getId();
+
+            textName.setText(student.getName());
+            textClass.setText(student.getClazz());
+            textAge.setText(student.getAge());
+            textAddress.setText(student.getAddress());
+            editTextDob.setText(student.getDob());
+
+            btnSave.setText(R.string.update);
+            isEditMode = true;
+        }
         editTextDate.setEndIconOnClickListener(v -> showDatePicker());
         btnSave.setOnClickListener(v -> saveStudent());
 
+    }
+
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 
     private void showDatePicker(){
@@ -109,10 +115,10 @@ public class addStudentActivity extends AppCompatActivity {
         String dateOfBirthday = editTextDob.getText().toString().trim();
 
         Student student = new Student();
-//        if(isEditMode){
-//
-//        }
-//        student.setId(studentId);
+        if(isEditMode){
+            student.setId(studentId);
+        }
+
 
         student.setName(name);
         student.setClazz(clazz);
@@ -121,10 +127,12 @@ public class addStudentActivity extends AppCompatActivity {
         student.setDob(dateOfBirthday);
 
         Call<Student> call;
-//        if(isEditMode){
-//            call = apiService.updateStudent(studentId, student);
-//        }else {}
+        if(isEditMode){
+            call = apiService.updateStudent(studentId, student);
+        }else {
             call = apiService.saveStudent(student);
+        }
+
 
 
         call.enqueue(new Callback<>(){
@@ -132,21 +140,21 @@ public class addStudentActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Student> call, Response<Student> response) {
                 if(response.isSuccessful()){
-                    Toast.makeText(addStudentActivity.this, "Student saved successfull!",
+                    Toast.makeText(AddStudentActivity.this, "Student saved successfull!",
                             Toast.LENGTH_SHORT).show();
                     clearForm();
-                    Intent intent = new Intent(addStudentActivity.this, listStudentActivity.class);
+                    Intent intent = new Intent(AddStudentActivity.this, ListStudentActivity.class);
                     startActivity(intent);
                     finish();
                 }else {
-                    Toast.makeText(addStudentActivity.this, "Fail to saved student"
+                    Toast.makeText(AddStudentActivity.this, "Fail to saved student"
                     + response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Student> call, Throwable t) {
-                Toast.makeText(addStudentActivity.this, "Error : " + t.getMessage(),
+                Toast.makeText(AddStudentActivity.this, "Error : " + t.getMessage(),
                         Toast.LENGTH_SHORT).show();
             }
         });
