@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import com.example.studentcrud.R;
 import com.example.studentcrud.activity.AddStudentActivity;
 import com.example.studentcrud.model.Student;
 import com.example.studentcrud.service.ApiService;
+import com.example.studentcrud.util.ApiClient;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -32,10 +34,10 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
     private List<Student> studentList;
     private ApiService apiService;
 
-    public StudentAdapter(Context context, List<Student> studentList, ApiService apiService) {
+    public StudentAdapter(Context context, List<Student> studentList) {
         this.context = context;
         this.studentList = studentList;
-        this.apiService = apiService;
+        this.apiService = ApiClient.getApiService();
     }
 
     @NonNull
@@ -56,7 +58,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
         holder.updateButton.setOnClickListener(v ->{
             Log.d("Update", "Update clicked for" + student.getName());
             Intent intent = new Intent(context, AddStudentActivity.class);
-            intent.putExtra("employee", new Gson(). toJson(student));
+            intent.putExtra("student", new Gson(). toJson(student));
             context.startActivity(intent);
         });
 
@@ -104,7 +106,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
 
         TextView nameText, addrssText;
 
-        Button updateButton, deleteButton;
+        ImageButton updateButton, deleteButton;
         public StudentViewHolder(@NonNull View itemView) {
             super(itemView);
             nameText = itemView.findViewById(R.id.nameText);

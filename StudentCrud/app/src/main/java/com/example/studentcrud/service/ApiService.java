@@ -16,12 +16,12 @@ public interface ApiService{
     @POST("student")
     Call<Student> saveStudent(@Body Student student);
 
-    @GET
+    @GET("student")
     Call<List<Student>> getAllStudent();
 
     @PUT("student/{id}")
     Call<Student> updateStudent(@Path("id") Long id, @Body Student student);
 
-    @DELETE
+    @DELETE("student/{id}")
     Call<Void> deleteStudent(@Path("id") Long id);
 }

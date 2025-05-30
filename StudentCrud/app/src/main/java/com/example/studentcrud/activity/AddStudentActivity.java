@@ -71,7 +71,7 @@ public class AddStudentActivity extends AppCompatActivity {
 
             textName.setText(student.getName());
             textClass.setText(student.getClazz());
-            textAge.setText(student.getAge());
+            textAge.setText(String.valueOf(student.getAge()));
             textAddress.setText(student.getAddress());
             editTextDob.setText(student.getDob());
 
@@ -98,7 +98,7 @@ public class AddStudentActivity extends AppCompatActivity {
 
         DatePickerDialog picker = new DatePickerDialog(this,
                 (view, year1, month1, day1) -> {
-                    String dob = String.format(Locale.US, "%04d-%02d-%02d", year1, month1, day1);
+                    String dob = String.format(Locale.US, "%04d-%02d-%02d", year1, month1 + 1, day1);
                     editTextDob.setText(dob);
                 },
                 year, month, day);
