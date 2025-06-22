@@ -1,6 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:empoyee_crud/models/employee.dart';
+import 'package:empoyee_crud/models/student.dart';
 
 class DatabaseService{
   static Database? _database;
@@ -24,6 +25,17 @@ class DatabaseService{
           designation TEXT NOT NULL
           )
           ''');
+          await db.execute('''
+           CREATE TABLE students(
+           id INTEGER PRIMARY KEY AUTOINCREMENT,
+           name TEXT NOT NULL,
+           email TEXT NOT NULL,
+           gender TEXT NOT NULL,
+           country TEXT NOT NULL,
+           image_path TEXT,
+           hobbies TEXT,
+           )
+          ''');
       },
     );
   }
@@ -41,5 +53,35 @@ class DatabaseService{
     final db = await database;
     final maps = await db.query('employees');
     return List.generate(maps.length, (i) => Employee.fromMap(maps[i]));
+  }
+
+  Future<void> insertStudent(Student studnet) async{
+    final db = await database;
+    await db.insert('studnets', studnet.toMap(),
+    conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  Future<List<Student>> getStudents() async{
+    final db = await database;
+    final maps = await db.query('students');
+    return List.generate(maps.length, (i) => Student.fromMap(maps[i]));
+  }
+
+  Future<void> updateStudent(Student student) async{
+    final db = await database;
+    await db.update('students',
+        student.toMap(),
+    where: 'id = ?',
+    whereArgs: [student.id],
+    );
+  }
+
+  Future<void> deleteStudent(int id) async{
+    final db = await database;
+    await db.delete(
+      'students',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
   }
 }

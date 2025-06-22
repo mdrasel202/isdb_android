@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:empoyee_crud/screens/employee_screen.dart';
+import 'package:empoyee_crud/screens/employee_screens.dart';
+import 'package:empoyee_crud/screens/student_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -34,6 +36,28 @@ class HomeScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(builder: (context) => const EmployeeScreen(),
                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.home),
+              title: const Text('Home'),
+              onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AddEmployeeScreen(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.people_alt                                                                                              ),
+              title: const Text('Student'),
+              onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const StudentScreen(),
+                  ),
                 );
               },
             )
