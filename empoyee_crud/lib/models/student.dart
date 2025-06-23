@@ -36,7 +36,7 @@ class Student{
       email: map['email'],
       gender: map['gender'],
       country: map['country'],
-      imagePath: map['imagePath'],
+      imagePath: map['image_path'],
       hobbies: map['hobbies'],
     );
   }

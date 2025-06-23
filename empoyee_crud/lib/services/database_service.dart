@@ -1,31 +1,31 @@
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
 import 'package:empoyee_crud/models/employee.dart';
 import 'package:empoyee_crud/models/student.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 
-class DatabaseService{
+class DatabaseService {
   static Database? _database;
 
-  Future<Database> get database async{
-    if(_database != null) return _database!;
+  Future<Database> get database async {
+    if (_database != null) return _database!;
     _database = await _initDatabase();
     return _database!;
   }
 
-  Future<Database> _initDatabase() async{
+  Future<Database> _initDatabase() async {
     final path = join(await getDatabasesPath(), 'employee.db');
     return await openDatabase(
-        path,
-        version: 1,
-      onCreate: (db, version) async{
-          await db.execute('''
+      path,
+      version: 1,
+      onCreate: (db, version) async {
+        await db.execute('''
           CREATE TABLE employees (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           name TEXT NOT NULL,
           designation TEXT NOT NULL
           )
           ''');
-          await db.execute('''
+        await db.execute('''
            CREATE TABLE students(
            id INTEGER PRIMARY KEY AUTOINCREMENT,
            name TEXT NOT NULL,
@@ -33,14 +33,14 @@ class DatabaseService{
            gender TEXT NOT NULL,
            country TEXT NOT NULL,
            image_path TEXT,
-           hobbies TEXT,
+           hobbies TEXT
            )
-          ''');
+        ''');
       },
     );
   }
 
-  Future<void> insertEmployee(Employee employee) async{
+  Future<void> insertEmployee(Employee employee) async {
     final db = await database;
     await db.insert(
       'employees',
@@ -49,39 +49,39 @@ class DatabaseService{
     );
   }
 
-  Future<List<Employee>> getEmployees() async{
+  Future<List<Employee>> getEmployees() async {
     final db = await database;
     final maps = await db.query('employees');
     return List.generate(maps.length, (i) => Employee.fromMap(maps[i]));
   }
 
-  Future<void> insertStudent(Student studnet) async{
+  Future<void> insertStudent(Student student) async {
     final db = await database;
-    await db.insert('studnets', studnet.toMap(),
-    conflictAlgorithm: ConflictAlgorithm.replace);
+    await db.insert(
+      'students',
+      student.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 
-  Future<List<Student>> getStudents() async{
+  Future<List<Student>> getStudents() async {
     final db = await database;
     final maps = await db.query('students');
     return List.generate(maps.length, (i) => Student.fromMap(maps[i]));
   }
 
-  Future<void> updateStudent(Student student) async{
+  Future<void> updateStudent(Student student) async {
     final db = await database;
-    await db.update('students',
-        student.toMap(),
-    where: 'id = ?',
-    whereArgs: [student.id],
+    await db.update(
+      'students',
+      student.toMap(),
+      where: 'id = ?',
+      whereArgs: [student.id],
     );
   }
 
-  Future<void> deleteStudent(int id) async{
+  Future<void> deleteStudent(int id) async {
     final db = await database;
-    await db.delete(
-      'students',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
+    await db.delete('students', where: 'id = ?', whereArgs: [id]);
   }
 }
