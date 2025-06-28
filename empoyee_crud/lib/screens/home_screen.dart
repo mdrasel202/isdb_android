@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:empoyee_crud/screens/employee_screen.dart';
 import 'package:empoyee_crud/screens/employee_screens.dart';
 import 'package:empoyee_crud/screens/student_screen.dart';
-import 'package:empoyee_crud/screens/circle_screen.dart';
-import 'package:empoyee_crud/screens/api_service.dart';
+
+import 'online_employee_screen.dart';
+// import 'package:empoyee_crud/screens/circle_screen.dart';
+// import 'package:empoyee_crud/screens/api_service.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -59,6 +61,17 @@ class HomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const StudentScreen(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.people_alt                                                                                              ),
+              title: const Text('Online Employee Button'),
+              onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const OnlineEmployeeScreen(),
                   ),
                 );
               },

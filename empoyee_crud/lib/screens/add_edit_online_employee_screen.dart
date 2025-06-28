@@ -1,10 +1,9 @@
-
-
 import 'dart:io';
 
 import 'package:empoyee_crud/models/online_employee.dart';
 import 'package:empoyee_crud/screens/api_service.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddEditOnLineEmployeeScreen extends StatefulWidget {
@@ -18,7 +17,7 @@ class AddEditOnLineEmployeeScreen extends StatefulWidget {
 }
 
 class _AddEditOnLineEmployeeScreenState
-extends State<AddEditOnLineEmployeeScreen>{
+    extends State<AddEditOnLineEmployeeScreen> {
   final _formkey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -33,9 +32,9 @@ extends State<AddEditOnLineEmployeeScreen>{
   final ImagePicker _picker = ImagePicker();
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    if(widget.employee != null){
+    if (widget.employee != null) {
       _nameController.text = widget.employee!.name;
       _emailController.text = widget.employee!.email;
       _designationController.text = widget.employee!.designation;
@@ -48,7 +47,7 @@ extends State<AddEditOnLineEmployeeScreen>{
   }
 
   @override
-  void dispose(){
+  void dispose() {
     _nameController.dispose();
     _emailController.dispose();
     _designationController.dispose();
@@ -59,27 +58,189 @@ extends State<AddEditOnLineEmployeeScreen>{
     super.dispose();
   }
 
-  Future<void> _pickImage() async{
+  Future<void> _pickImage() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    if(pickedFile != null){
+    if (pickedFile != null) {
       setState(() {
         _image = File(pickedFile.path);
       });
     }
   }
 
-  Future<void> _saveEmployee() async{
-    if(_formkey.currentState!.validate()){
+  Future<void> _saveEmployee() async {
+    if (_formkey.currentState!.validate()) {
       final employee = OnlineEmployee(
         id: widget.employee?.id,
         name: _nameController.text,
+        email: _emailController.text,
+        designation: _designationController.text,
+        age: int.parse(_ageController.text),
+        address: _addressController.text,
+        dob: _dobController.text,
+        salary: double.parse(_salaryController.text),
+        image: _imageUrl,
       );
+
+      try {
+        OnlineEmployee savedEmployee;
+        if (widget.employee == null) {
+          savedEmployee = await _apiService.saveEmployee(employee);
+        } else {
+          savedEmployee = await _apiService.updateEmployee(
+            widget.employee!.id!,
+            employee,
+          );
+        }
+        if (_image != null) {
+          final imageUrl = await _apiService.uploadImage(
+            savedEmployee.id!,
+            _image!,
+          );
+          final updatedEmployee = OnlineEmployee(
+            id: savedEmployee.id,
+            name: savedEmployee.name,
+            email: savedEmployee.email,
+            designation: savedEmployee.designation,
+            age: savedEmployee.age,
+            address: savedEmployee.address,
+            dob: savedEmployee.dob,
+            salary: savedEmployee.salary,
+            image: imageUrl,
+          );
+          await _apiService.updateEmployee(savedEmployee.id!, updatedEmployee);
+        }
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              widget.employee == null ? 'Employee added' : 'Employee updated',
+            ),
+          ),
+        );
+        Navigator.pop(context);
+      } catch (e) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error : $e')));
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.employee == null ? 'Add Employee' : 'Edit Employee'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formkey,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextFormField(
+                  controller: _nameController,
+                  decoration: const InputDecoration(labelText: 'Name'),
+                  validator: (value) => value!.isEmpty ? 'Enter a name' : null,
+                ),
+                TextFormField(
+                  controller: _emailController,
+                  decoration: const InputDecoration(labelText: 'Email'),
+                  validator: (value) {
+                    if (value!.isEmpty) return 'Enter an email';
+                    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                      return 'Enter a valid email';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: _designationController,
+                  decoration: const InputDecoration(labelText: 'Designation'),
+                  validator: (value) => value == null || value.isEmpty
+                      ? 'Enter a designation'
+                      : null,
+                ),
+                TextFormField(
+                  controller: _ageController,
+                  decoration: const InputDecoration(labelText: 'Age'),
+                  keyboardType: TextInputType.number,
+                  validator: (value) {
+                    if (value!.isEmpty) return 'Enter a age';
+                    if (int.tryParse(value) == null) {
+                      return 'Enter a valid number';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: _addressController,
+                  decoration: const InputDecoration(labelText: 'Address'),
+                  validator: (value) =>
+                      value!.isEmpty ? 'Enter an address' : null,
+                ),
+                TextFormField(
+                  controller: _dobController,
+                  decoration: const InputDecoration(
+                    labelText: 'Date of Birth (yyyy-MM-dd)',
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) return 'Enter a date';
+                    if (!RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(value)) {
+                      return 'Enter date as yyyy-MM-dd';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: _salaryController,
+                  decoration: const InputDecoration(labelText: 'Salary'),
+                  keyboardType: TextInputType.number,
+                  validator: (value) {
+                    if (value!.isEmpty) return 'Enter a salary';
+                    if (double.tryParse(value) == null) {
+                      return 'Enter a valid number';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+                const Text('Profile Image'),
+                _image != null
+                    ? Image.file(
+                        _image!,
+                        height: 100,
+                        width: 100,
+                        fit: BoxFit.cover,
+                      )
+                    : _imageUrl != null
+                    ? Image.network(
+                        _imageUrl!,
+                        height: 100,
+                        width: 100,
+                        fit: BoxFit.cover,
+                      )
+                    : const Text('No image selected'),
+                ElevatedButton(
+                  onPressed: _pickImage,
+                  child: const Text('Pick Image'),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: _saveEmployee,
+                  child: Text(
+                    widget.employee == null
+                        ? 'Add Employee'
+                        : 'Update Employee',
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
