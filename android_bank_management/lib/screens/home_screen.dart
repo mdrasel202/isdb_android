@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'bank_account.dart';
 import 'home_page.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -52,12 +53,12 @@ class HomeScreen extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text('Home'),
+              leading: const Icon(Icons.account_balance),
+              title: const Text('Account'),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const HomePage()),
+                  MaterialPageRoute(builder: (context) => const AddAccountPage()),
                 );
               },
             ),
