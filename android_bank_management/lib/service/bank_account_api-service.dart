@@ -5,25 +5,35 @@ import 'dart:convert';
 
 
 class ApiService{
-  static const String baseUrl = "http://192.168.0.116/bank";
+  static const String baseUrl = "http://10.0.2.2:8081/bank";
+  // static const String baseUrl = "http://192.168.0.116:8081/bank";
 
-  Future<String> createAccount(BankAccountRequest req) async {
-    final resp = await http.post(
-      Uri.parse('$baseUrl/request'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(req.toJson()),
-    );
-    if (resp.statusCode == 200) {
-      return jsonDecode(resp.body)['message'];
+  Future<String> requestBankAccount(BankAccountRequestDTO dto) async {
+    final url = Uri.parse('$baseUrl/request');
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(dto.toJson()),
+      );
+
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body)['message'];
+      } else {
+        throw Exception(
+            'Failed to request bank account: ${response.statusCode} ${response.body}');
+      }
+    } catch (e) {
+      throw Exception('Error requesting bank account: $e');
     }
-    throw Exception('Create account failed (${resp.statusCode})');
   }
 
-  Future<List<BankAccountResponse>> getAllAccounts() async {
+
+  Future<List<BankAccountResponseDTO>> getAllAccounts() async {
     final resp = await http.get(Uri.parse('$baseUrl/getAll'));
     if (resp.statusCode == 200) {
       final List list = jsonDecode(resp.body);
-      return list.map((e) => BankAccountResponse.fromJson(e)).toList();
+      return list.map((e) => BankAccountResponseDTO.fromJson(e)).toList();
     }
     throw Exception('Failed to fetch accounts');
 

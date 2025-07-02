@@ -1,0 +1,1 @@
+enum AccountStatus { REQUESTED, APPROVED, REJECTED }

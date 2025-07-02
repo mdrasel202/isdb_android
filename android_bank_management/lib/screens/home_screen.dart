@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'bank_account.dart';
+import 'bank_account_create.dart';
 import 'home_page.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -41,14 +42,13 @@ class HomeScreen extends StatelessWidget {
                 'Manu',
                 style: TextStyle(color: Colors.white, fontSize: 24),
               ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.home),
+            ), ListTile(
+              leading: const Icon(Icons.account_balance),
               title: const Text('Home'),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const HomePage()),
+                  MaterialPageRoute(builder: (context) => CreateAccountScreen()),
                 );
               },
             ),
@@ -58,7 +58,17 @@ class HomeScreen extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const AddAccountPage()),
+                  MaterialPageRoute(builder: (context) => const RequestAccountScreen()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.account_balance),
+              title: const Text('List Account'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AccountListScreen()),
                 );
               },
             ),

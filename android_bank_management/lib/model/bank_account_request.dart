@@ -1,23 +1,27 @@
-class BankAccountRequest {
-  final int userId;
-  final String type;
-  final String name;
-  final double balance;
-  final String requestDate;
+import '../constants/bank_account_enum.dart';
 
-  BankAccountRequest({
-    required this.userId,
+class BankAccountRequestDTO {
+  final AccountType type;
+  final String name;
+  final double? balance;
+  final String requestDate;
+  final int userId;
+
+  BankAccountRequestDTO({
     required this.type,
     required this.name,
-    required this.balance,
+    this.balance,
     required this.requestDate,
+    required this.userId,
   });
 
-  Map<String, dynamic> toJson() => {
-    'userId': userId,
-    'type': type,
-    'name': name,
-    'balance': balance,
-    'requestDate': requestDate,
-  };
+  Map<String, dynamic> toJson() {
+    return {
+      'type': type.toString().split('.').last,
+      'name': name,
+      'balance': balance,
+      'requestDate': requestDate,
+      'userId': userId,
+    };
+  }
 }
