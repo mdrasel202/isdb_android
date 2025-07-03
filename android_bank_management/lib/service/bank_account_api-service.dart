@@ -1,16 +1,15 @@
+import 'dart:convert';
+
 import 'package:android_bank_management/model/bank_account_request.dart';
 import 'package:android_bank_management/model/bank_account_response.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
-
-class ApiService{
+class ApiService {
   static const String baseUrl = "http://10.0.2.2:8081/bank";
-  // static const String baseUrl = "http://192.168.0.116:8081/bank";
 
   Future<String> requestBankAccount(BankAccountRequestDTO dto) async {
-    final url = Uri.parse('$baseUrl/request');
     try {
+      final url = Uri.parse('$baseUrl/request');
       final response = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
@@ -20,22 +19,28 @@ class ApiService{
       if (response.statusCode == 200) {
         return jsonDecode(response.body)['message'];
       } else {
+        // Get more detailed error information
+        final errorBody = jsonDecode(response.body);
+        final errorMessage =
+            errorBody['message'] ?? errorBody['error'] ?? response.body;
         throw Exception(
-            'Failed to request bank account: ${response.statusCode} ${response.body}');
+          'Failed to request account ($response.statusCode): $errorMessage',
+        );
       }
     } catch (e) {
-      throw Exception('Error requesting bank account: $e');
+      throw Exception('Network error: ${e.toString()}');
     }
   }
 
-
   Future<List<BankAccountResponseDTO>> getAllAccounts() async {
-    final resp = await http.get(Uri.parse('$baseUrl/getAll'));
-    if (resp.statusCode == 200) {
-      final List list = jsonDecode(resp.body);
-      return list.map((e) => BankAccountResponseDTO.fromJson(e)).toList();
+    final response = await http.get(Uri.parse('$baseUrl/getAll'));
+    if (response.statusCode == 200) {
+      final List jsonList = jsonDecode(response.body);
+      return jsonList
+          .map((json) => BankAccountResponseDTO.fromJson(json))
+          .toList();
+    } else {
+      throw Exception('Failed to fetch accounts');
     }
-    throw Exception('Failed to fetch accounts');
-
   }
 }

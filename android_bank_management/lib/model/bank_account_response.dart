@@ -1,5 +1,4 @@
 import '../constants/bank_account_enum.dart';
-import '../constants/bank_account_status.dart';
 
 class BankAccountResponseDTO {
   final int id;
@@ -7,9 +6,9 @@ class BankAccountResponseDTO {
   final int userId;
   final String userName;
   final AccountType type;
-  final AccountStatus status;
+  final String status;
   final double availableBalance;
-  final String openedDate; // Represent LocalDate as String "yyyy-MM-dd"
+  final String openedDate;
 
   BankAccountResponseDTO({
     required this.id,
@@ -28,11 +27,9 @@ class BankAccountResponseDTO {
       accountNumber: json['accountNumber'],
       userId: json['userId'],
       userName: json['userName'],
-      type: AccountType.values.firstWhere(
-              (e) => e.toString().split('.').last == json['type']),
-      status: AccountStatus.values.firstWhere(
-              (e) => e.toString().split('.').last == json['status']),
-      availableBalance: json['availableBalance'].toDouble(),
+      type: AccountType.values.firstWhere((e) => e.name == json['type']),
+      status: json['status'],
+      availableBalance: (json['availableBalance'] as num).toDouble(),
       openedDate: json['openedDate'],
     );
   }

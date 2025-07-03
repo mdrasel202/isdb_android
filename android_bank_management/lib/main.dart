@@ -1,4 +1,5 @@
-import 'package:android_bank_management/screens/home_screen.dart';
+import 'package:android_bank_management/screens/home_screen_ex.dart';
+import 'package:android_bank_management/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,11 +14,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Bank Management',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const HomeScreen(),
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: const LoginScreen(),
     );
   }
 }

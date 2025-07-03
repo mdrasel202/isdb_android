@@ -1,16 +1,32 @@
-import 'package:flutter/material.dart';
 
-import 'bank_account.dart';
+
+import 'package:android_bank_management/screens/resources_screen.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 import 'bank_account_create.dart';
-import 'home_page.dart';
+import 'bank_account_list.dart';
+import 'login_screen.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  final Map<String, dynamic> user;
+
+  const HomeScreen({super.key, required this.user});
+
+  Future<void> _logout(BuildContext context) async {
+    await const FlutterSecureStorage().delete(key: 'access_token');
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
+      // appBar: AppBar(title: Text('Welcome, ${user['firstName']}')),
       appBar: AppBar(
         backgroundColor: colorScheme.primary,
         iconTheme: IconThemeData(color: Colors.white),
@@ -36,21 +52,21 @@ class HomeScreen extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(color: Colors.blue),
-              child: Text(
-                'Manu',
-                style: TextStyle(color: Colors.white, fontSize: 24),
+            DrawerHeader(
+              decoration: const BoxDecoration(color: Colors.blue),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${user['firstName']} ${user['lastName']}',
+                    style: const TextStyle(color: Colors.white, fontSize: 24),
+                  ),
+                  Text(
+                    user['email'],
+                    style: const TextStyle(color: Colors.white70, fontSize: 16),
+                  ),
+                ],
               ),
-            ), ListTile(
-              leading: const Icon(Icons.account_balance),
-              title: const Text('Home'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CreateAccountScreen()),
-                );
-              },
             ),
             ListTile(
               leading: const Icon(Icons.account_balance),
@@ -58,7 +74,9 @@ class HomeScreen extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const RequestAccountScreen()),
+                  MaterialPageRoute(
+                    builder: (context) => CreateAccountScreen(),
+                  ),
                 );
               },
             ),
@@ -68,13 +86,33 @@ class HomeScreen extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const AccountListScreen()),
+                  MaterialPageRoute(
+                    builder: (context) =>  AccountListScreen(),
+                  ),
                 );
               },
+            ),
+            ListTile(
+              leading: const Icon(Icons.storage),
+              title: const Text('Resources'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ResourcesScreen(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text('Logout'),
+              onTap: () => _logout(context),
             ),
           ],
         ),
       ),
+      body: const Center(child: Text('Home Screen')),
     );
   }
 }
