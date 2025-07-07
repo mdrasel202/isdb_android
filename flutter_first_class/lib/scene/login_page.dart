@@ -1,9 +1,11 @@
+
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../model/registerRequest.dart';
-import '../model/userResponse.dart';
+
 import '../service/auth_service.dart';
-import 'home_page.dart';
+import 'bankAccountPage.dart';
+import 'homescreen.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,24 +15,30 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final emailCtrl = TextEditingController();
-  final passwordCtrl = TextEditingController();
-  final authService = AuthService(); // Instantiate AuthService here
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final authService = AuthService();
 
-  bool loading = false;
+  void _login() async {
+    final email = emailController.text;
+    final password = passwordController.text;
 
-  void login() async {
-    setState(() => loading = true);
-    try {
-      // Corrected 'User' to 'UserResponse' to match your model definition
-      UserResponse? user = await authService.login(emailCtrl.text, passwordCtrl.text);
-
-      // Navigate to HomePage, passing the authenticated user
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomePage(user: user!)));
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+    final success = await authService.login(email, password);
+    if (success) {
+      if (!mounted) return;
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const HomePage()),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Login successful")),
+      );
+    } else {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Login failed")),
+      );
     }
-    setState(() => loading = false);
   }
 
   @override
@@ -42,24 +50,19 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           children: [
             TextField(
-              controller: emailCtrl,
+              controller: emailController,
               decoration: const InputDecoration(labelText: "Email"),
-              keyboardType: TextInputType.emailAddress, // Added keyboard type for better UX
             ),
-            const SizedBox(height: 10), // Added spacing between text fields
             TextField(
-              controller: passwordCtrl,
-              obscureText: true,
+              controller: passwordController,
               decoration: const InputDecoration(labelText: "Password"),
+              obscureText: true,
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: loading ? null : login,
-              child: loading ? const CircularProgressIndicator() : const Text("Login"),
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size.fromHeight(50), // Make button wider for better touch target
-              ),
-            )
+              onPressed: _login,
+              child: const Text("Login"),
+            ),
           ],
         ),
       ),
