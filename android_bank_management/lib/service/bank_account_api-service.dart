@@ -4,6 +4,8 @@ import 'package:android_bank_management/model/bank_account_request.dart';
 import 'package:android_bank_management/model/bank_account_response.dart';
 import 'package:http/http.dart' as http;
 
+import '../model/bank_account.dart';
+
 class ApiService {
   static const String baseUrl = "http://10.0.2.2:8081/bank";
 
@@ -41,6 +43,22 @@ class ApiService {
           .toList();
     } else {
       throw Exception('Failed to fetch accounts');
+    }
+  }
+
+  //admin
+  // Approve account by ID (POST)
+  Future<BankAccountResponseDTO> approveAccount(int accountId) async {
+    final url = Uri.parse('$baseUrl/approve/$accountId');
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      return BankAccountResponseDTO.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to approve account');
     }
   }
 }

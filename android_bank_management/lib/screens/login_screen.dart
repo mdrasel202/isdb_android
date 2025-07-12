@@ -3,6 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../service/auth_service.dart';
 import 'home_screen.dart';
+import 'home_screen_ex.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -46,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => HomeScreen(user: response['user']),
+            builder: (context) => HomePage(user: response['user']),
           ),
         );
       } catch (e) {

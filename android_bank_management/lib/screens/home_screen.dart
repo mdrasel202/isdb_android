@@ -3,6 +3,7 @@
 import 'package:android_bank_management/screens/resources_screen.dart';
 import 'package:android_bank_management/screens/transfer_list.dart';
 import 'package:android_bank_management/screens/transfer_screen.dart';
+import 'package:android_bank_management/screens/withdrawal_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -152,6 +153,18 @@ class HomeScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => TransactionListScreen(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.storage),
+              title: const Text('Withdrawal Page'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => WithdrawalPage(),
                   ),
                 );
               },

@@ -14,7 +14,7 @@
 class BankAccount {
   final int id;
   final String accountNumber;
-  final String? name;  // nullable name
+  final String? name;
   final double availableBalance;
 
   BankAccount({
@@ -26,10 +26,10 @@ class BankAccount {
 
   factory BankAccount.fromJson(Map<String, dynamic> json) {
     return BankAccount(
-      id: json['id'],
-      accountNumber: json['accountNumber'],
-      name: json['userName'] ?? 'Unknown',  // or json['name'] depending on your API
-      availableBalance: (json['availableBalance'] as num).toDouble(),
+      id: json['id'] ?? 0,
+      accountNumber: json['accountNumber'] ?? 'No Number',
+      name: json['userName'] ?? json['name'] ?? 'Unknown',
+      availableBalance: (json['availableBalance'] ?? 0).toDouble(),
     );
   }
 }

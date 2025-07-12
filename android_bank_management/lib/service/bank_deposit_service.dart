@@ -20,7 +20,7 @@ class ApiDeposit {
   }
 
   static Future<List<BankAccount>> getAllAccounts() async {
-    final response = await http.get(Uri.parse('$baseUrl/bankdeposit/getAll'));
+    final response = await http.get(Uri.parse('$baseUrl/bank/getAll'));
     if (response.statusCode == 200) {
       final List<dynamic> jsonData = jsonDecode(response.body);
       return jsonData.map((e) => BankAccount.fromJson(e)).toList();

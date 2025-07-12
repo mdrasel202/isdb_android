@@ -74,7 +74,7 @@ class _TransferScreenState extends State<TransferScreen> {
               items: accounts.map((account) {
                 return DropdownMenuItem(
                   value: account,
-                  child: Text('${account.accountNumber} (${account.name ?? 'No Name'})'),
+                  child: Text('${account.accountNumber} '), //(${account.name ?? 'No Name'})
                 );
               }).toList(),
               onChanged: (val) {
@@ -91,7 +91,7 @@ class _TransferScreenState extends State<TransferScreen> {
               items: accounts.map((account) {
                 return DropdownMenuItem(
                   value: account,
-                  child: Text('${account.accountNumber} (${account.name ?? 'No Name'})'),
+                  child: Text('${account.accountNumber} '), //(${account.name ?? 'No Name'})
                 );
               }).toList(),
               onChanged: (val) {

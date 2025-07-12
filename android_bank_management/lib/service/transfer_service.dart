@@ -47,7 +47,9 @@ class ApiTransfer {
   }
 
   static Future<List<BankAccount>> getAccounts() async {
-    final response = await http.get(Uri.parse('$baseUrl/getAlls'));
+    final response = await http.get(Uri.parse('$baseUrl/getAll'));
+
+    print("RESPONSE: ${response.body}");
 
     if (response.statusCode == 200) {
       List jsonList = json.decode(response.body);
@@ -57,13 +59,4 @@ class ApiTransfer {
     }
   }
 
-  static Future<List<BankAccount>> fetchAccounts() async {
-    final response = await http.get(Uri.parse('$baseUrl/getAlls'));
-    if (response.statusCode == 200) {
-      List data = jsonDecode(response.body);
-      return data.map((json) => BankAccount.fromJson(json)).toList();
-    } else {
-      throw Exception('Failed to load accounts');
-    }
-  }
 }
