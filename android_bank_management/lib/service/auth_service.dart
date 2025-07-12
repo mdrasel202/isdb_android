@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 
 class AuthService {
   static const String baseUrl = 'http://10.0.2.2:8081';
+  //  static const String baseUrl = 'http://192.168.0.110:8081';
 
   Future<Map<String, dynamic>> login(String email, String password) async {
     final response = await http.post(

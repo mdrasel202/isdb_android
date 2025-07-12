@@ -6,7 +6,8 @@ import '../model/bank_account.dart';
 import '../model/withdrawal_transaction.dart';
 
 class WithdrawalService {
-  static const String baseUrl = "http://10.0.2.2:8081"; // Android emulator to localhost
+  static const String baseUrl = "http://10.0.2.2:8081";
+  // static const String baseUrl = 'http://192.168.0.110:8081';
 
   // ✅ Get bank accounts
   Future<List<BankAccount>> fetchAccounts() async {

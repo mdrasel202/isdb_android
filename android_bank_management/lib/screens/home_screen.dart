@@ -86,7 +86,7 @@ class HomeScreen extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.account_balance),
+              leading: const Icon(Icons.account_box),
               title: const Text('List Account'),
               onTap: () {
                 Navigator.push(
@@ -97,32 +97,21 @@ class HomeScreen extends StatelessWidget {
                 );
               },
             ),
+            // ListTile(
+            //   leading: const Icon(Icons.storage),
+            //   title: const Text('Resources'),
+            //   onTap: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder: (context) => const ResourcesScreen(),
+            //       ),
+            //     );
+            //   },
+            // ),
+
             ListTile(
-              leading: const Icon(Icons.storage),
-              title: const Text('Resources'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ResourcesScreen(),
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.storage),
-              title: const Text('Deposit'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => DepositFormScreen(),
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.storage),
+              leading: const Icon(Icons.deblur),
               title: const Text('Deposit List'),
               onTap: () {
                 Navigator.push(

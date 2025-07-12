@@ -8,6 +8,7 @@ import '../model/transfer_request.dart';
 
 class ApiTransfer {
   static const String baseUrl = 'http://10.0.2.2:8081/bank';
+  // static const String baseUrl = 'http://192.168.0.110:8081/bank';
 
   // POST Transfer
   static Future<String> makeTransfer(TransferRequestDTO request) async {

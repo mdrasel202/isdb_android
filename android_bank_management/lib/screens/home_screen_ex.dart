@@ -52,7 +52,7 @@ class HomePage extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   const Text(
-                    "Neo Banking",
+                    "Bank Management",
                     style: TextStyle(
                       fontSize: 26,
                       color: Colors.white,

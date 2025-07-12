@@ -5,7 +5,8 @@ import '../model/bank_deposit_request.dart';
 import '../model/bank_deposit_response.dart';
 
 class ApiDeposit {
-  static const String baseUrl = "http://10.0.2.2:8081"; // Use your local IP on physical device
+  static const String baseUrl = "http://10.0.2.2:8081";
+  // static const String baseUrl = 'http://192.168.0.110:8081';
 
   static Future<BankDepositResponseDTO?> createDeposit(BankDepositRequestDTO request) async {
     final response = await http.post(

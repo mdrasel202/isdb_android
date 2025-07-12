@@ -8,6 +8,7 @@ import '../model/bank_account.dart';
 
 class ApiService {
   static const String baseUrl = "http://10.0.2.2:8081/bank";
+  // static const String baseUrl = 'http://192.168.0.110:8081/bank';
 
   Future<String> requestBankAccount(BankAccountRequestDTO dto) async {
     try {

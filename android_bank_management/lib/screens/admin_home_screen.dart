@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'admin_account.dart';
+import 'deposit_screen.dart';
 import 'login_screen.dart';
 
 class AddHomeScreen extends StatelessWidget {
@@ -71,6 +72,18 @@ class AddHomeScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => AdminAccountPage(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.storage),
+              title: const Text('Deposit'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DepositFormScreen(),
                   ),
                 );
               },
